@@ -46,8 +46,8 @@ void Client::PutCallback(sofa::pbrpc::RpcController* cntl,
     failed_.Inc();
   } else {
     count_.Inc();
-    pending_.Dec();
   }
+  pending_.Dec();
 
   delete cntl;
   delete request;
