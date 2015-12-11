@@ -1,0 +1,59 @@
+// Copyright (c) 2015, squirreldb. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import "src/proto/status_code.proto";
+
+package baidu.squirrel.server;
+option cc_generic_services = true;
+
+message PutRequest {
+  optional bytes key = 1;
+  optional bytes value = 2;
+}
+
+message PutResponse {
+  optional StatusCode status = 1;
+}
+
+message GetRequest {
+  optional bytes key = 1;
+}
+
+message GetResponse {
+  optional bytes value = 1;
+  optional StatusCode status = 2;
+}
+
+message DeleteRequest {
+  optional bytes key = 1;
+}
+
+message DeleteResponse {
+  optional StatusCode status = 2;
+}
+
+message ScanRequest {
+  optional bytes start_key = 1;
+  optional bytes end_key = 2;
+}
+
+message ScanResponse {
+  repeated KvPair results = 1;
+  optional StatusCode status = 2;
+  optional bool complete = 3;
+}
+
+// helper messages
+
+message KvPair {
+  optional bytes key = 1;
+  optional bytes value = 2;
+}
+
+service Server {
+  rpc Put(PutRequest) returns(PutResponse);
+  rpc Get(GetRequest) returns(GetResponse);
+  rpc Delete(DeleteRequest) returns(DeleteResponse);
+  rpc Scan(ScanRequest) returns(ScanResponse);
+}
